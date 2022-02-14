@@ -7,62 +7,67 @@
     </div>
 
     <section class="section dashboard">
-        <div class="row">
+        <div class="row flex-wrap">
             <div class="col-12">
-                <div class="card recent-sales overflow-auto">
-                    <div class="card-body">
+                <div class="card recent-sales">
+                    <div class="row flex-wrap card-body">
                         <h5 class="card-title">Cursos Disponíveis!</h5>
-
-                        <div class="col-2">
+                        @foreach($courses as $course)
+                        <div class="col-3">
                             <div class="card">
-                                <img src="{{ asset('course/assets/img/card.jpg') }}" class="card-img-top" alt="...">
+                                <img src="{{ $course->image_url }}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">Card with an image on top</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary" href="#">Ir ao curso</a>
+                                    <h5 class="card-title">{{ \Illuminate\Support\Str::limit($course->name, 10) }}</h5>
+                                    <p class="card-text">{{ \Illuminate\Support\Str::limit($course->description, 50) }}</p>
+                                    <a class="btn btn-primary" href="{{ url("/curso/{$course->slug}") }}">Ir ao curso</a>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
 
                     </div>
 
                 </div>
             </div>
             <div class="col-12">
-                    <div class="card recent-sales overflow-auto">
-                        <div class="card-body">
-                            <h5 class="card-title">Cursos Pagos!</h5>
+                <div class="card recent-sales">
+                    <div class="row flex-wrap card-body">
+                        <h5 class="card-title">Cursos Grátis!</h5>
 
-                            <div class="col-2">
+                        @foreach($coursesFree as $course)
+                            <div class="col-3">
                                 <div class="card">
-                                    <img src="{{ asset('course/assets/img/card.jpg') }}" class="card-img-top" alt="...">
+                                    <img src="{{ $course->image_url }}" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">Card with an image on top</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a class="btn btn-primary" href="#">Ir ao curso</a>
+                                        <h5 class="card-title">{{ \Illuminate\Support\Str::limit($course->name, 10) }}</h5>
+                                        <p class="card-text">{{ \Illuminate\Support\Str::limit($course->description, 50) }}</p>
+                                        <a class="btn btn-primary" href="{{ url("/curso/{$course->slug}") }}">Ir ao curso</a>
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
+                        @endforeach
 
                     </div>
-                </div>
-            <div class="col-12">
-                <div class="card recent-sales overflow-auto">
-                    <div class="card-body">
-                        <h5 class="card-title">Cursos Grátis!</h5>
 
-                        <div class="col-2">
-                            <div class="card">
-                                <img src="{{ asset('course/assets/img/card.jpg') }}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card with an image on top</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary" href="#">Ir ao curso</a>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card recent-sales">
+                    <div class="row flex-wrap card-body">
+                        <h5 class="card-title">Cursos Pagos!</h5>
+
+                        @foreach($coursesPaid as $course)
+                            <div class="col-3">
+                                <div class="card">
+                                    <img src="{{ $course->image_url }}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ \Illuminate\Support\Str::limit($course->name, 10) }}</h5>
+                                        <p class="card-text">{{ \Illuminate\Support\Str::limit($course->description, 50) }}</p>
+                                        <a class="btn btn-primary" href="{{ url("/curso/{$course->slug}") }}">Ir ao curso</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
 
                     </div>
 

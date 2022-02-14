@@ -157,13 +157,27 @@
                         <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
                     </ul>
                 </div>
-                <div class="col-lg-6 pt-4 pt-lg-0">
-                    <p>
-                        Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <a href="#" class="btn-learn-more">Learn More</a>
+                 <div class="col-lg-6 pt-4 pt-lg-0">
+                         <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                             <div class="row">
+                                 <div class="form-group col-md-12">
+                                     <label for="name">Seu nome completo</label>
+                                     <input type="text" name="name" class="form-control" id="name" required>
+                                 </div>
+                                 <div class="form-group col-md-12">
+                                     <label for="name">Seu email</label>
+                                     <input type="email" class="form-control" name="email" id="email" required>
+                                 </div>
+                             </div>
+                             <div class="form-group">
+                                 <label for="name">Senha</label>
+                                 <input type="text" class="form-control" name="subject" id="subject" required>
+                             </div>
+
+                             <div class="form-group mt-2">
+                                 <button class="btn btn-primary" type="submit">Criar conta</button>
+                             </div>
+                         </form>
                 </div>
             </div>
 

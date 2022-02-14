@@ -16,12 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/", [HomeController::class, 'index']);
+Route::get("/login", [HomeController::class, 'login']);
+Route::get("/register", [HomeController::class, 'register']);
 Route::get("/fac", [HomeController::class, 'factory']);
+
+Route::post("/register", [HomeController::class, 'postRegister']);
+Route::post("/login", [HomeController::class, 'postLogin']);
 
 Route::get('/curso/', [CourseViewController::class, 'index'])->name('course.index');
 Route::get('/curso/meus-cursos', [CourseViewController::class, 'listCourse'])->name('course.listCourse');
 Route::get('/curso/certificados', [CourseViewController::class, 'listCertificate'])->name('course.certificate');
 Route::get('/curso/meu-perfil', [CourseViewController::class, 'showProfile'])->name('course.profile');
-Route::get('/curso/{slug?}', [CourseViewController::class, 'showCourse'])->name('course.showCourse');
 Route::get('/curso/{slug?}/{slugclass}', [CourseViewController::class, 'showCourseLesson'])->name('course.showCourseLesson');
+Route::get('/curso/{slug?}', [CourseViewController::class, 'showCourse'])->name('course.showCourse');
+
 

@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Psr7\Request;
+use App\Models\Course;
+use App\Models\CourseLesson;
+use Illuminate\Http\Request;
 
 class CourseViewController extends Controller
 {
     public function index()
     {
-        return view('course.index');
+        $courses = (new Course())->showAvaliablesCourses();
+        $coursesFree = (new Course())->showCoursesFree();
+        $coursesPaid = (new Course())->showCoursesPaid();
+        return view('course.index', compact('courses', 'coursesFree', 'coursesPaid'));
     }
 
     public function listCourse()
@@ -17,14 +22,18 @@ class CourseViewController extends Controller
         return view('course.listcourse');
     }
 
-    public function showCourse()
+    public function showCourse(Request $request, string $slug)
     {
-        return view('course.showcourse');
+        $course = Course::where('slug', $slug)->first();
+
+        return view('course.showcourse', compact('course'));
     }
 
-    public function showCourseLesson()
+    public function showCourseLesson(Request $request, string $slug, string $slugclass)
     {
-        return view('course.showcourselesson');
+        $courselesson = CourseLesson::where('slug', $slugclass)->first();
+
+        return view('course.showcourselesson', compact('courselesson'));
     }
 
     public function listCertificate()
