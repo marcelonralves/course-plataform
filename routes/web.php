@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Course\CourseViewController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get("/", [HomeController::class, 'index']);
+
+Route::get('/curso/', [CourseViewController::class, 'index'])->name('course.index');
+Route::get('/curso/meus-cursos', [CourseViewController::class, 'listCourse'])->name('course.listCourse');
+Route::get('/curso/certificados', [CourseViewController::class, 'listCertificate'])->name('course.certificate');
+Route::get('/curso/meu-perfil', [CourseViewController::class, 'showProfile'])->name('course.profile');
+Route::get('/curso/{slug?}', [CourseViewController::class, 'showCourse'])->name('course.showCourse');
+Route::get('/curso/{slug?}/{slugclass}', [CourseViewController::class, 'showCourseLesson'])->name('course.showCourseLesson');
+
