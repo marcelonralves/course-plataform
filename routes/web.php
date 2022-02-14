@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/", [HomeController::class, 'index']);
+Route::get("/fac", [HomeController::class, 'factory']);
 
 Route::get('/curso/', [CourseViewController::class, 'index'])->name('course.index');
 Route::get('/curso/meus-cursos', [CourseViewController::class, 'listCourse'])->name('course.listCourse');
