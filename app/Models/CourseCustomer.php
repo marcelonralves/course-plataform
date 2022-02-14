@@ -9,5 +9,12 @@ class CourseCustomer extends Model
 {
     use HasFactory;
 
-    protected $table = 'course_costumers';
+    protected $table = 'course_customers';
+
+    public function course()
+    {
+        return $this->hasOne(Course::class, 'id', 'course_id');
+    }
+
+
 }

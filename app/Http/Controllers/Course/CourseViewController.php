@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseCustomer;
 use App\Models\CourseLesson;
 use Illuminate\Http\Request;
 
@@ -19,14 +20,19 @@ class CourseViewController extends Controller
 
     public function listCourse()
     {
-        return view('course.listcourse');
+        $customerCourses = CourseCustomer::where('customer_id', auth()->id())->get();
+
+
+
+        return view('course.listcourse', compact('customerCourses'));
     }
 
     public function showCourse(Request $request, string $slug)
     {
         $course = Course::where('slug', $slug)->first();
+        $customer = CourseCustomer::where(['customer_id' => auth()->id(), 'course_id' => $course->id])->first();
 
-        return view('course.showcourse', compact('course'));
+        return view('course.showcourse', compact('course', 'customer'));
     }
 
     public function showCourseLesson(Request $request, string $slug, string $slugclass)
@@ -44,5 +50,21 @@ class CourseViewController extends Controller
     public function showProfile()
     {
         return view('course.profile');
+    }
+
+    public function subscribe(Request $request, int $id)
+    {
+        $request->merge(['id' => $id]);
+
+        $this->validate($request, [
+            'id' => 'required|int',
+        ]);
+
+        $subscribeCustomer = new CourseCustomer();
+        $subscribeCustomer->customer_id = auth()->id();
+        $subscribeCustomer->course_id = $request->id;
+        $subscribeCustomer->save();
+
+        return redirect()->intended("/curso/meus-cursos");
     }
 }

@@ -14,19 +14,22 @@
                         <h5 class="card-title">Programação</h5>
                         <h1>{{ $course->name }}</h1>
                         <p>{{ $course->description }}</p>
-                            <h5 class="card-title">Aulas</h5>
-                            <!-- List group With Checkboxes and radios -->
+
+                        <h5 class="card-title">Aulas</h5>
+                        @if($customer)
                             <ul class="list-group">
                                 @foreach($course->lesson as $lesson)
-
-                                <li class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                                    <a href="{{ url("/curso/{$course->slug}/{$lesson->slug}") }}">{{ $lesson->title }}</a>
-                                </li>
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                        <a href="{{ url("/curso/{$course->slug}/{$lesson->slug}") }}">{{ $lesson->title }}</a>
+                                    </li>
                                 @endforeach
-                            </ul><!-- End List Checkboxes and radios -->
-
-
+                            </ul>
+                        @else
+                            Parece que você não está cadastrado nesse curso!
+                            <p>Caso queira ter acesso as aulas basta clicar no botão abaixo!</p>
+                            <a href="{{ url("/inscrever/{$course->id}") }}" class="btn btn-primary">Inscrever!</a>
+                        @endif
                     </div>
 
                 </div>
