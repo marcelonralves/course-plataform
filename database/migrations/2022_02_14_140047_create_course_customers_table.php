@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('course_customers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("customer_id");
+            $table->foreignId("course_id");
             $table->timestamps();
         });
     }
