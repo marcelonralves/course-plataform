@@ -24,7 +24,7 @@ Route::post("/register", [HomeController::class, 'postRegister']);
 Route::post("/login", [HomeController::class, 'postLogin']);
 Route::get("/inscrever/{id}", [CourseViewController::class, 'subscribe']);
 
-Route::get('/curso/', [CourseViewController::class, 'index'])->name('course.index');
+Route::get('/curso/', [CourseViewController::class, 'dashboard'])->name('course.index');
 Route::get('/curso/meus-cursos', [CourseViewController::class, 'listCourse'])->name('course.listCourse');
 Route::get('/curso/certificados', [CourseViewController::class, 'listCertificate'])->name('course.certificate');
 Route::get('/curso/meu-perfil', [CourseViewController::class, 'showProfile'])->name('course.profile');

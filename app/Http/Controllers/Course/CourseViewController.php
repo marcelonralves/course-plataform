@@ -3,42 +3,55 @@
 namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShowCourseRequest;
 use App\Models\Course;
 use App\Models\CourseCustomer;
 use App\Models\CourseLesson;
+use App\Repository\CourseRepository;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class CourseViewController extends Controller
 {
-    public function index()
+    private CourseRepository $repository;
+
+    public function __construct(CourseRepository $repository)
     {
-        $courses = (new Course())->showAvaliablesCourses();
-        $coursesFree = (new Course())->showCoursesFree();
-        $coursesPaid = (new Course())->showCoursesPaid();
-        return view('course.index', compact('courses', 'coursesFree', 'coursesPaid'));
+        $this->repository = $repository;
     }
 
-    public function listCourse()
+    public function dashboard(): View
     {
-        $customerCourses = CourseCustomer::where('customer_id', auth()->id())->get();
+        $getCourses = $this->repository->dashboard();
 
+        return view('course.index', [
+            'courses' => $getCourses['courses'],
+            'coursesFree' => $getCourses['coursesFree'],
+            'coursesPaid' => $getCourses['coursesPaid']
+        ]);
+    }
 
-
+    public function listCourse(): View
+    {
+        $customerCourses = $this->repository->listCourses();
         return view('course.listcourse', compact('customerCourses'));
     }
 
-    public function showCourse(Request $request, string $slug)
+    public function showCourse(ShowCourseRequest $request, string $slug): View
     {
-        $course = Course::where('slug', $slug)->first();
-        $customer = CourseCustomer::where(['customer_id' => auth()->id(), 'course_id' => $course->id])->first();
+        $request->merge(['slug' => $slug]);
 
-        return view('course.showcourse', compact('course', 'customer'));
+        $courseInfo = $this->repository->showCourse($request->input('slug'));
+
+        return view('course.showcourse', [
+            'course' => $courseInfo['course'],
+            'customer' => $courseInfo['customer']
+        ]);
     }
 
     public function showCourseLesson(Request $request, string $slug, string $slugclass)
     {
         $courselesson = CourseLesson::where('slug', $slugclass)->first();
-
         return view('course.showcourselesson', compact('courselesson'));
     }
 
@@ -57,13 +70,10 @@ class CourseViewController extends Controller
         $request->merge(['id' => $id]);
 
         $this->validate($request, [
-            'id' => 'required|int',
+            'id' => 'required|int|exists:course,id',
         ]);
 
-        $subscribeCustomer = new CourseCustomer();
-        $subscribeCustomer->customer_id = auth()->id();
-        $subscribeCustomer->course_id = $request->id;
-        $subscribeCustomer->save();
+        $this->repository->subscribe($request->input('id'));
 
         return redirect()->intended("/curso/meus-cursos");
     }
